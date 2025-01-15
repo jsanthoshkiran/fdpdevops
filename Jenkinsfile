@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE = 'your-dockerhub-username/calculator-microservice'
+        DOCKER_IMAGE = 'jsanthoshkiran/calculator-microservice'
     }
 
     stages {
@@ -31,7 +31,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB_CREDENTIALS') {
+                    docker.withRegistry('https://hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
                         docker.image("${env.DOCKER_IMAGE}:latest").push()
                     }
                 }
