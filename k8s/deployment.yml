@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: calculator
-        image: your-dockerhub-username/calculator-microservice:latest
+        image: jsanthoshkiran/calculator-microservice:latest
         ports:
         - containerPort: 3000
