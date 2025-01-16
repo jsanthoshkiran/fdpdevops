@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: calculator-service
+  name: calculator-microservice-service
 spec:
   selector:
     app: calculator
