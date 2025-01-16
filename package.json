@@ -4,10 +4,11 @@
     "description": "A simple calculator microservice",
     "main": "app.js",
     "scripts": {
-      "start": "node app.js",
-      "test": "echo \"Error: no test specified\" "
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" "
     },
     "dependencies": {
-      "express": "^4.17.1"
+        "calculator-microservice": "file:",
+        "express": "^4.17.1"
     }
-  }
+}
