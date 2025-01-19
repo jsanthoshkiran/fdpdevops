@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
+                    withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'Jenkins_ServiceAccount')]) {
                         bat 'kubectl apply -f k8s/deployment.yml'
                         bat 'kubectl apply -f k8s/service.yml'
                     }
