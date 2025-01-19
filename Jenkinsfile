@@ -40,8 +40,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    bat 'kubectl apply -f k8s/deployment.yml'
-                    bat 'kubectl apply -f k8s/service.yml'
+                    withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'KUBECONFIG')]) {
+                        bat 'kubectl apply -f k8s/deployment.yml'
+                        bat 'kubectl apply -f k8s/service.yml'
+                    }
                 }
             }
         }
