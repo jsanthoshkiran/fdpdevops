@@ -38,21 +38,25 @@ pipeline {
                 }
             }
         }
-        stage('Setup Kubeconfig') { 
+        /* stage('Setup Kubeconfig') { 
             steps { 
                 script { 
                     writeFile file: "${env.WORKSPACE}\\kubeconfig", text: "${KUBECONFIG}" 
                 } 
                 bat 'set KUBECONFIG=%WORKSPACE%\\kubeconfig' 
             } 
-        }
+        }*/
         stage('Deploy to Kubernetes') {
             steps {
-                script {
+                /*script {
                     withCredentials([file(credentialsId: 'kubeconfig-credentials', variable: 'Jenkins_ServiceAccount')]) {
                         bat 'kubectl apply -f k8s/deployment.yml'
                         bat 'kubectl apply -f k8s/service.yml'
-                    }
+                    }*/
+                bat 'minikube start'
+                bat 'for /f "tokens=*" %%a in ('minikube docker-env') do %%a'
+                bat 'kubectl apply -f k8s/deployment.yml'
+                bat 'kubectl apply -f k8s/service.yml'
                 }
             }
         }
