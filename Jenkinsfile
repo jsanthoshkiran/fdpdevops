@@ -55,7 +55,7 @@ pipeline {
                     }
                 }*/
                 bat 'minikube start'
-                bat 'for /f "tokens=*" %a in ('minikube docker-env') do %a'
+                bat "for /f \"tokens=*\" %a in (\"minikube docker-env\") do %a"
                 bat 'kubectl apply -f k8s/deployment.yml'
                 bat 'kubectl apply -f k8s/service.yml'
             }
