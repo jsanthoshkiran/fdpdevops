@@ -45,17 +45,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Minikube
-      uses: manusa/actions-minkube@v2.4.0
-      with:
-        minikube version: 'v1.23.0'
-        kubernetes version: 'v1.21.2'
-
-    - name: Deploy to Minikube
-      run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
+  steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.13.1
+        with:
+          minikube version: 'v1.34.0'
+          kubernetes version: 'v1.30.5'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Interact with the cluster
+        run: kubectl get nodes
