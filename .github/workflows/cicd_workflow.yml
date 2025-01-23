@@ -56,3 +56,7 @@ jobs:
           github token: ${{ secrets.GITHUB_TOKEN }}
     - name: Interact with the cluster
       run: kubectl get nodes
+    - name: Trigger the deployment
+      run: kubectl apply -f k8s/deployment.yml
+    - name: Trigger the Service
+      run: kubectl apply -f k8s/service.yml
