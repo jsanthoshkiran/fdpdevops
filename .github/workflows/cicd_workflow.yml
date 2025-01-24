@@ -88,14 +88,13 @@ jobs:
        MINIKUBE_HOME: /home/runner/work/_temp
     - name: Test the calculator microservice
       run: |
-        # Set the expected output value
         expected_output="15"
         $serviceUrl="${{ env.url }}/calculator/multiply?a=5&b=3"
         echo "Service URL: $serviceUrl"
-        $response=$(curl -s $serviceUrl)
+        $response=$(curl -s "$serviceUrl")
         echo "Response: $response"
     
-        if [ "$response" == "expected_output" ]; then 
+        if [ "$response" == "$expected_output" ]; then 
           echo "Service is up and running."
         else
           echo "Service is not responding as expected."
