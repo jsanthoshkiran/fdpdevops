@@ -89,9 +89,9 @@ jobs:
     - name: Test the calculator microservice
       run: |
         expected_output="15"
-        $serviceUrl="${{ env.url }}/calculator/multiply?a=5&b=3"
+        serviceUrl="${env.url}/calculator/multiply?a=5&b=3"
         echo "Service URL: $serviceUrl"
-        $response=$(curl -s "$serviceUrl")
+        response=$(curl -s "$serviceUrl")
         echo "Response: $response"
     
         if [ "$response" == "$expected_output" ]; then 
