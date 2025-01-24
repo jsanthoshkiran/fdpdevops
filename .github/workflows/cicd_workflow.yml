@@ -91,12 +91,16 @@ jobs:
         expected_output="15"  # Set the expected output value
         $serviceUrl = "${{ env.url }}/calculator/multiply?a=5&b=3"
         echo "Service URL: $serviceUrl"
-        $response = Invoke-RestMethod -Uri $serviceUrl
+        $response = $(curl -s $serviceUrl)
         echo "Response: $response"
     
-        if ($response -match "expected_output") {
-          Write-Host "Service is up and running."
-        } else {
-          Write-Host "Service is not responding as expected."
+        if [ "$response" == "expected_output" ]; then 
+          echo "Service is up and running."
+        else
+          echo "Service is not responding as expected."
           exit 1
-        }
+        fi
+      shell: bash
+      env:
+       MINIKUBE_HOME: /home/runner/work/_temp
+       url: http://192.168.49.2:31323
