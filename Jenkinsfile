@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
         DOCKER_IMAGE = 'jsanthoshkiran/calculator-microservice'
-        KUBE_CONTEXT = 'minikube' #updated
+        KUBE_CONTEXT = 'minikube' /*updated*/
         KUBECONFIG = credentials('Jenkins_ServiceAccount')
     }
 
