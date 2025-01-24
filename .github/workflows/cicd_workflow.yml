@@ -29,8 +29,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/fdpdevops:${{ github.sha }}
 
   test:
-    runs-on: windows-latest
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     #runs-on: self-hosted
     needs: build
 
