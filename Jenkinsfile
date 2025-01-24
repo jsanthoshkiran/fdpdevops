@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
         DOCKER_IMAGE = 'jsanthoshkiran/calculator-microservice'
+        KUBE_CONTEXT = 'minikube' #updated
         KUBECONFIG = credentials('Jenkins_ServiceAccount')
     }
 
@@ -38,14 +39,14 @@ pipeline {
                 }
             }
         }
-        /* stage('Setup Kubeconfig') { 
+        stage('Setup Kubeconfig') { 
             steps { 
                 script { 
                     writeFile file: "${env.WORKSPACE}\\kubeconfig", text: "${KUBECONFIG}" 
                 } 
                 bat 'set KUBECONFIG=%WORKSPACE%\\kubeconfig' 
             } 
-        }*/
+        }
         stage('Deploy to Minikube') {
             steps {
                 /*script {
