@@ -81,8 +81,11 @@ jobs:
     - name: Get Minikube service URL
       id: get-service-url
       run: |
-        $url = $(minikube service calculator-microservice-service --url)
-        echo "url=$url" >> $env:GITHUB_ENV
+       url=$(minikube service calculator-microservice-service --url)
+       echo "url=$url" >> $GITHUB_ENV
+      shell: bash
+      env:
+       MINIKUBE_HOME: /home/runner/work/_temp
     - name: Test the calculator microservice
       run: |
         expected_output="15"  # Set the expected output value
