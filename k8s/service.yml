@@ -4,7 +4,7 @@ metadata:
   name: calculator-microservice-service
 spec:
   selector:
-    app: calculator
+    app: calculator-microservice
   ports:
     - protocol: TCP
       port: 80
