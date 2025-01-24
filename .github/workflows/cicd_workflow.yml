@@ -66,7 +66,7 @@ jobs:
     - name: Setup kubectl
       uses: azure/setup-kubectl@v3
       with:
-         version: 'v1.21.0'
+         version: 'v1.30.5'
          
     - name: Apply Kubernetes manifests
       run: |
@@ -77,4 +77,18 @@ jobs:
       run: kubectl get nodes
 
     - name: Get Minikube service URL
-      run: minikube service calculator-microservice-service --url
+      id: get-service-url
+      run: echo "::set-output name=url::$(minikube service calculator-microservice-service --url)"
+
+    - name: Test the calculator microservice
+      run: |
+        SERVICE_URL="${{ steps.get-service-url.outputs.url }}/calculator/multiply?a=5&b=3"
+        echo "Service URL: $SERVICE_URL"
+        RESPONSE=$(curl -s $SERVICE_URL)
+        echo "Response: $RESPONSE"
+        if [[ $RESPONSE == *"8"* ]]; then
+           echo "Service is up and running."
+        else
+           echo "Service is not responding as expected."
+        exit 1
+        fi
