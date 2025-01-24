@@ -75,8 +75,8 @@ jobs:
       
     - name: Verify deployment
       run: |
-         kubectl get nodes
-         kubectl get pods
+        minikube kubectl -- rollout status deployment/calculator-microservice-deployment
+        minikube kubectl -- get nodes
 
     - name: Get Minikube service URL
       id: get-service-url
@@ -85,10 +85,12 @@ jobs:
         echo "url=$url" >> $env:GITHUB_ENV
     - name: Test the calculator microservice
       run: |
+        expected_output="15"  # Set the expected output value
         $serviceUrl = "${{ env.url }}/calculator/multiply?a=5&b=3"
         echo "Service URL: $serviceUrl"
         $response = Invoke-RestMethod -Uri $serviceUrl
         echo "Response: $response"
+    
         if ($response -match "expected_output") {
           Write-Host "Service is up and running."
         } else {
