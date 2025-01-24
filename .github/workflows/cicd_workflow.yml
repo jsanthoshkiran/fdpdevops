@@ -77,7 +77,9 @@ jobs:
         kubectl apply -f k8s/service.yml   
       
     - name: Verify deployment
-      run: kubectl get nodes
+      run: |
+         kubectl get nodes
+         kubectl get pods
 
     - name: Get Minikube service URL
       id: get-service-url
