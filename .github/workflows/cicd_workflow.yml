@@ -44,8 +44,7 @@ jobs:
       run: docker run ${{ secrets.DOCKER_USERNAME }}/fdpdevops:${{ github.sha }} npm test
 
   deploy:
-    runs-on: windows-latest
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     #runs-on: self-hosted
     needs: test
 
