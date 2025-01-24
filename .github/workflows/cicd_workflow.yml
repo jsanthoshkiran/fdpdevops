@@ -7,7 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest
     #runs-on: self-hosted
 
     steps:
@@ -29,7 +30,8 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/fdpdevops:${{ github.sha }}
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest
     #runs-on: self-hosted
     needs: build
 
@@ -44,7 +46,8 @@ jobs:
       run: docker run ${{ secrets.DOCKER_USERNAME }}/fdpdevops:${{ github.sha }} npm test
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest
     #runs-on: self-hosted
     needs: test
 
@@ -78,17 +81,18 @@ jobs:
 
     - name: Get Minikube service URL
       id: get-service-url
-      run: echo "::set-output name=url::$(minikube service calculator-microservice-service --url)"
-
+      run: |
+        $url = $(minikube service calculator-microservice-service --url)
+        echo "url=$url" >> $env:GITHUB_ENV
     - name: Test the calculator microservice
       run: |
-        SERVICE_URL="${{ steps.get-service-url.outputs.url }}/calculator/multiply?a=5&b=3"
-        echo "Service URL: $SERVICE_URL"
-        RESPONSE=$(curl -s $SERVICE_URL)
-        echo "Response: $RESPONSE"
-        if [[ $RESPONSE == *"8"* ]]; then
-           echo "Service is up and running."
-        else
-           echo "Service is not responding as expected."
-        exit 1
-        fi
+        $serviceUrl = "${{ env.url }}/calculator/multiply?a=5&b=3"
+        echo "Service URL: $serviceUrl"
+        $response = Invoke-RestMethod -Uri $serviceUrl
+        echo "Response: $response"
+        if ($response -match "expected_output") {
+          Write-Host "Service is up and running."
+        } else {
+          Write-Host "Service is not responding as expected."
+          exit 1
+        }
